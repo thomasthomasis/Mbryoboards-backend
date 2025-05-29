@@ -14,7 +14,7 @@ const app = express();
 const server = http.createServer(app)
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://mbryoboards.vercel.app',
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }
@@ -40,7 +40,7 @@ app.use('/api/ideas', ideaRoutes)
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
-    server.listen(5000, () => {
+    server.listen(process.env.PORT, () => {
       console.log(`Server running on port ${process.env.PORT || 5000}`);
     })
   })
