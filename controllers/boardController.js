@@ -1,9 +1,11 @@
-const { nanoid } = await import('nanoid');
 const Board = require('../models/Board');
 const Idea = require('../models/Idea');
 
 
 exports.createBoard = async (req, res) => {
+
+  const { nanoid } = await import('nanoid');
+  
   const boardId = nanoid(10);
   const board = new Board({
     id: boardId,
@@ -79,6 +81,8 @@ exports.addIdea = async (req, res) => {
     const board = await Board.findOne({ id: req.params.boardId });
     if (!board) return res.status(404).send('Board not found');
 
+    const { nanoid } = await import('nanoid');
+    
     const ideaId = nanoid(10);
     const idea = new Idea({
         id: ideaId,
