@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const Idea = require('../models/Idea');
 
 exports.getAllIdeas = async (req, res) => {

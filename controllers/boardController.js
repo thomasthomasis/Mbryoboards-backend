@@ -1,4 +1,4 @@
-const { nanoid } = require('nanoid');
+const { nanoid } = await import('nanoid');
 const Board = require('../models/Board');
 const Idea = require('../models/Idea');
 
