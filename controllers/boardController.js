@@ -1,6 +1,9 @@
 const Board = require('../models/Board');
 const Idea = require('../models/Idea');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 exports.createBoard = async (req, res) => {
 
@@ -108,5 +111,77 @@ exports.getIdeasByBoard = async (req, res) => {
     } catch (error) {
         console.error('Error fetching ideas for board:', error);
         res.status(500).json({ message: 'Server error fetching board ideas' });
+    }
+};
+
+exports.generateActionItem = async (req, res) => {
+  const { boardId } = req.params;
+
+    try {
+        const ideas = await Idea.find({ boardId });
+
+        res.status(200).json(ideas); // Can be empty array
+    } catch (error) {
+        console.error('Error fetching ideas for board:', error);
+        res.status(500).json({ message: 'Server error fetching board ideas' });
+    }
+}
+
+exports.generateActionItem = async (req, res) => {
+
+    const ideaToProcess = req.params;
+
+    // 1. Construct the prompt for the Ollama model
+    const prompt = `
+      You are an expert project manager assistant. Your task is to convert a piece of feedback into a structured action item.
+
+      Your response MUST be a valid JSON object and nothing else. Do not include any text, explanations, or markdown formatting like \`\`\`json before or after the JSON object.
+
+      The JSON object must have the following two keys:
+      1. "description": A concise, one-sentence explanation of what needs to be done.
+
+      ---
+      Here is an example:
+
+      User Feedback: "The final designs were delivered late, which delayed the development team."
+
+      Your JSON Response:
+      {
+        "description": "Create a clear schedule for design handoffs to ensure the development team receives assets on time."
+      }
+      ---
+
+      Now, process the following user feedback:
+
+      User Feedback: "${ideaToProcess}"
+
+      Your JSON Response:
+      `;
+
+    try {
+        // 2. Make a POST request to the local Ollama server
+        const response = await fetch(process.env.AI_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: "mistral", // The model you downloaded
+                prompt: prompt,
+                stream: false // IMPORTANT: Keep this false for a simple, single response
+            }),
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Ollama API request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        res.status(200).json(data); 
+
+    } catch (e) {
+        console.error('Error generating action item:', error);
+        res.status(500).json({ message: 'Server error generating action item' });
     }
 };
