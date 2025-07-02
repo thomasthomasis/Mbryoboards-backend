@@ -166,7 +166,7 @@ exports.generateActionItem = async (req, res) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                model: "mistral", // The model you downloaded
+                model: "qwen2:0.5b-instruct", // The model you downloaded
                 prompt: prompt,
                 stream: false // IMPORTANT: Keep this false for a simple, single response
             }),
