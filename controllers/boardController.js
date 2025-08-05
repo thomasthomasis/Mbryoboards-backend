@@ -97,7 +97,8 @@ exports.addIdea = async (req, res) => {
         id: ideaId,
         boardId: req.params.boardId,
         content: req.body.content,
-        type: req.body.type
+        type: req.body.type,
+        completed: false
     });
     await idea.save();
 
