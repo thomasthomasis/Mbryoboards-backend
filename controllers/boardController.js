@@ -30,6 +30,12 @@ exports.getBoards = async (req, res) => {
     res.json(boards);
 }
 
+exports.getActionItems = async (req, res) => {
+    const actionItems = await Idea.find({ type: "action" });
+    if (!actionItems) return res.status(404).send('No action items found');
+    res.json(actionItems);
+}
+
 exports.deleteBoard = async (req, res) => {
     const boardId = req.params.boardId;
     console.log("Board Id: ", boardId);

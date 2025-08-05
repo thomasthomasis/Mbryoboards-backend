@@ -9,7 +9,8 @@ const {
 
   addIdea,
   getIdeasByBoard,
-  generateActionItem
+  generateActionItem,
+  getActionItems
 } = require('../controllers/boardController');
 
 router.post('/', createBoard);
@@ -21,5 +22,6 @@ router.put('/:boardId', editBoardTitle)
 router.post('/:boardId/ideas', addIdea);
 router.get('/:boardId/ideas', getIdeasByBoard);
 router.post('/:boardId/generateActionItem', generateActionItem)
+router.get('/actionItems', getActionItems);
 
 module.exports = router;
