@@ -125,6 +125,7 @@ exports.completeActionItem = async (req, res) => {
         const updatedIdea = await Idea.findOneAndUpdate(
             { id: ideaId },
             { completed: true },
+            { new: true}
         );
 
         if (!updatedIdea) {
@@ -144,6 +145,7 @@ exports.uncompleteActionItem = async (req, res) => {
         const updatedIdea = await Idea.findOneAndUpdate(
             { id: ideaId },
             { completed: false },
+            { new: true}
         );
 
         if (!updatedIdea) {
