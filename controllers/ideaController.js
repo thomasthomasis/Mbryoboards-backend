@@ -117,3 +117,22 @@ exports.editIdeaContent = async (req, res) => {
         res.status(500).json({ message: 'Server error updating content' });
     }
 };
+
+exports.completeActionItem = async (req, res) => {
+    const ideaId = req.params.ideaId;
+    
+    try {
+        const updatedIdea = await Idea.findOneAndUpdate(
+            { id: ideaId },
+            { completed: true },
+        );
+
+        if (!updatedIdea) {
+        return res.status(404).json({ message: 'Idea not found' });
+        }
+
+        res.json(updatedIdea);
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating idea', error: err });
+    }
+}
