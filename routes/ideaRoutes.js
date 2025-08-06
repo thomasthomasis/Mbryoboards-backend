@@ -16,6 +16,6 @@ router.post('/:ideaId/upvote', upVoteIdea);
 router.post('/:ideaId/downvote', downVoteIdea);
 router.put('/:ideaId', editIdeaContent)
 router.post('/:ideaId/complete', completeActionItem)
-router.post('/:ideaId/uncomplete', completeActionItem)
+router.post('/:ideaId/uncomplete', uncompleteActionItem)
 
 module.exports = router;
