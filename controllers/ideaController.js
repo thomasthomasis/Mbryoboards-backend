@@ -136,3 +136,22 @@ exports.completeActionItem = async (req, res) => {
         res.status(500).json({ message: 'Error updating idea', error: err });
     }
 }
+
+exports.uncompleteActionItem = async (req, res) => {
+    const ideaId = req.params.ideaId;
+    
+    try {
+        const updatedIdea = await Idea.findOneAndUpdate(
+            { id: ideaId },
+            { completed: false },
+        );
+
+        if (!updatedIdea) {
+        return res.status(404).json({ message: 'Idea not found' });
+        }
+
+        res.json(updatedIdea);
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating idea', error: err });
+    }
+}

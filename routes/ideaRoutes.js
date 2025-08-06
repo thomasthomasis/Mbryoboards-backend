@@ -6,7 +6,8 @@ const {
   getAllIdeas,
   deleteIdea,
   editIdeaContent,
-  completeActionItem
+  completeActionItem,
+  uncompleteActionItem
 } = require('../controllers/ideaController');
 
 router.get('/', getAllIdeas)
@@ -15,5 +16,6 @@ router.post('/:ideaId/upvote', upVoteIdea);
 router.post('/:ideaId/downvote', downVoteIdea);
 router.put('/:ideaId', editIdeaContent)
 router.post('/:ideaId/complete', completeActionItem)
+router.post('/:ideaId/uncomplete', completeActionItem)
 
 module.exports = router;
